@@ -100,7 +100,6 @@ def rysujSciezke(miasta, sciezka, startoweMiasto, najlepszaOdleglosc):
     plt.show()
 
 
-
 def pokazWyniki(wyniki):
     okno = tk.Tk()
     okno.title("Wyniki")
