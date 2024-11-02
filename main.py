@@ -22,10 +22,6 @@ def wczytajGraf(sciezkaPliku):
     return miasta, liczbaMiast
 
 
-def obliczOdleglosc(miasto1, miasto2):
-    return np.sqrt((miasto2[0] - miasto1[0]) ** 2 + (miasto2[1] - miasto1[1]) ** 2)
-
-
 def najblizszySasiad(miasta, startoweMiasto):
     liczbaMiast = len(miasta)
     odwiedzone = [False] * (liczbaMiast + 1)
@@ -58,6 +54,10 @@ def najblizszySasiad(miasta, startoweMiasto):
     sciezka.append(startoweMiasto)
 
     return calkowitaOdleglosc, sciezka
+
+
+def obliczOdleglosc(miasto1, miasto2):
+    return np.sqrt((miasto2[0] - miasto1[0]) ** 2 + (miasto2[1] - miasto1[1]) ** 2)
 
 
 def rysujSciezke(miasta, sciezka, startoweMiasto, najlepszaOdleglosc):
