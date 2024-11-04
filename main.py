@@ -4,39 +4,30 @@ import matplotlib.pyplot as plt
 import tkinter as tk
 from tkinter import scrolledtext
 import time
+from numba import jit
 
 
-def wczytajGraf(sciezkaPliku):
-    miasta = {}
-    with open(sciezkaPliku, "r") as reader:
-        linie = reader.readlines()
-        liczbaMiast = int(linie[0])
-
-        for i in range(1, liczbaMiast + 1):
-            dane = linie[i].split()
-            numerMiasta = int(dane[0])
-            x = int(dane[1])
-            y = int(dane[2])
-            miasta[numerMiasta] = (x, y)
-
-    return miasta, liczbaMiast
+@jit(nopython=True)
+def obliczOdleglosc(miasto1, miasto2):
+    return np.sqrt((miasto2[0] - miasto1[0]) ** 2 + (miasto2[1] - miasto1[1]) ** 2)
 
 
+@jit(nopython=True)
 def najblizszySasiad(miasta, startoweMiasto):
-    liczbaMiast = len(miasta)
-    odwiedzone = [False] * (liczbaMiast + 1)
-    sciezka = []
+    liczbaMiast = len(miasta) - 1
+    odwiedzone = np.zeros(liczbaMiast + 1, dtype=np.bool_)
+    sciezka = np.empty(liczbaMiast + 1, dtype=np.int32)
     aktualneMiasto = startoweMiasto
-    calkowitaOdleglosc = 0
+    calkowitaOdleglosc = 0.0
 
     odwiedzone[aktualneMiasto] = True
-    sciezka.append(aktualneMiasto)
+    sciezka[0] = aktualneMiasto
 
-    for _ in range(liczbaMiast - 1):
+    for i in range(1, liczbaMiast):
         najblizszeMiasto = -1
         najkrotszaOdleglosc = float('inf')
 
-        for miasto in miasta.keys():
+        for miasto in range(1, liczbaMiast + 1):
             if not odwiedzone[miasto]:
                 odleglosc = obliczOdleglosc(miasta[aktualneMiasto], miasta[miasto])
                 if odleglosc < najkrotszaOdleglosc:
@@ -45,19 +36,31 @@ def najblizszySasiad(miasta, startoweMiasto):
 
         if najblizszeMiasto != -1:
             odwiedzone[najblizszeMiasto] = True
-            sciezka.append(najblizszeMiasto)
+            sciezka[i] = najblizszeMiasto
             calkowitaOdleglosc += najkrotszaOdleglosc
             aktualneMiasto = najblizszeMiasto
 
-    #Powrót do miasta startowego
+    # Powrót do miasta startowego
     calkowitaOdleglosc += obliczOdleglosc(miasta[aktualneMiasto], miasta[startoweMiasto])
-    sciezka.append(startoweMiasto)
+    sciezka[liczbaMiast] = startoweMiasto
 
     return calkowitaOdleglosc, sciezka
 
 
-def obliczOdleglosc(miasto1, miasto2):
-    return np.sqrt((miasto2[0] - miasto1[0]) ** 2 + (miasto2[1] - miasto1[1]) ** 2)
+def wczytajGraf(sciezkaPliku):
+    with open(sciezkaPliku, "r") as reader:
+        linie = reader.readlines()
+        liczbaMiast = int(linie[0])
+
+        miasta = np.empty((liczbaMiast + 1, 2))
+
+        for i in range(1, liczbaMiast + 1):
+            dane = linie[i].split()
+            x = float(dane[1])
+            y = float(dane[2])
+            miasta[i] = (x, y)
+
+    return miasta, liczbaMiast
 
 
 def rysujSciezke(miasta, sciezka, startoweMiasto, najlepszaOdleglosc):
@@ -76,19 +79,19 @@ def rysujSciezke(miasta, sciezka, startoweMiasto, najlepszaOdleglosc):
                      arrowprops=dict(arrowstyle='->', color=kolor, lw=1.5))
 
 
-    for miasto in miasta:
+    for miasto in range(1, len(miasta)):
         if miasto == startoweMiasto:
             plt.plot(miasta[miasto][0], miasta[miasto][1], 'ro', markersize=6)
             plt.text(
                 miasta[startoweMiasto][0], miasta[startoweMiasto][1],
                 f'{startoweMiasto}', fontsize=6, ha='left',
-                bbox=dict(facecolor='red', alpha=0.5, edgecolor='black', boxstyle='round,pad=0.3')
+                bbox=dict(facecolor='red', alpha=0.9, edgecolor='black', boxstyle='round,pad=0.3')
             )
         else:
             plt.text(
                 miasta[miasto][0], miasta[miasto][1], str(miasto),
                 fontsize=6,
-                bbox=dict(facecolor='white', alpha=0.5, edgecolor='black', boxstyle='round,pad=0.3')
+                bbox=dict(facecolor='white', alpha=0.75, edgecolor='black', boxstyle='round,pad=0.3')
             )
 
     plt.title("Ścieżka między miastami\n" f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n")
@@ -117,18 +120,10 @@ def pokazWyniki(wyniki):
 
 def main():
     startTime = time.perf_counter()
-    miasta, liczbaMiast = wczytajGraf("graf.txt")
-
-    print(f"Miasta: {miasta}")
-
-    startoweMiasto = 3
+    miasta, liczbaMiast = wczytajGraf("instancje/graf.txt")
+    startoweMiasto = 1
 
     najlepszaOdleglosc, sciezka = najblizszySasiad(miasta, startoweMiasto)
-
-    print(f"Liczba miast: {liczbaMiast}")
-    print("Miasta:")
-    for numer, (x, y) in miasta.items():
-        print(f"{numer}: (X: {x}, Y: {y})")
 
     wyniki = (f"Liczba miast: {liczbaMiast}\n"
               f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n"
@@ -136,10 +131,10 @@ def main():
 
     print(wyniki)
 
-    czas = time.perf_counter()  - startTime
-    print(f"Czas wykonywania: {czas:.4f} sekundy")
+    czas = time.perf_counter() - startTime
+    print(f"Czas wykonywania: {czas:.4f} s")
 
-    #pokazWyniki(wyniki)
+    # pokazWyniki(wyniki)
     rysujSciezke(miasta, sciezka, startoweMiasto, najlepszaOdleglosc)
 
 
