@@ -1,6 +1,6 @@
 import random
 
-liczbaMiast = 100
+liczbaMiast = 13
 sciezkaPliku = "instancje/graf.txt"
 miasta = set()
 
