@@ -21,7 +21,8 @@ def wczytajGraf(sciezkaPliku):
 
     return miasta, liczbaMiast
 
-def rysujSciezke(miasta, sciezka, najlepszaOdleglosc):
+
+def rysujSciezke(miasta, sciezka, najlepszaOdleglosc, instancja):
     fig = plt.figure(figsize=(10, 8))
     startoweMiasto = sciezka[0]
 
@@ -52,13 +53,14 @@ def rysujSciezke(miasta, sciezka, najlepszaOdleglosc):
                 bbox=dict(facecolor='white', alpha=0.75, edgecolor='black', boxstyle='round,pad=0.3')
             )
 
-    plt.title("Ścieżka między miastami\n" f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n")
+    plt.title(f"Instancja: {instancja}\n" "Ścieżka między miastami\n" f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n")
     plt.xlabel("X")
     plt.ylabel("Y")
     plt.grid()
 
-    fig.canvas.manager.set_window_title("Problem Komiwojażera")
+    fig.canvas.manager.set_window_title(f"{instancja}")
     plt.show()
+
 
 def pokazWyniki(wyniki):
     okno = tk.Tk()
@@ -74,14 +76,17 @@ def pokazWyniki(wyniki):
 
     okno.mainloop()
 
+
 def main():
     startTime = time.perf_counter()
-    miasta, liczbaMiast = wczytajGraf("instancje/graf.txt")
+    instancja = "berlin52"
+    miasta, liczbaMiast = wczytajGraf(f"instancje/{instancja}.txt")
     startoweMiasto = 1
 
 
     #najlepszaOdleglosc, najlepszaSciezka = najblizszySasiad(miasta, startoweMiasto)
-    najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta, 100)
+    #najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta)
+    najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta, 1000,30,0.013)
 
 
     endTime = time.perf_counter()
@@ -89,12 +94,14 @@ def main():
 
     wyniki = (f"Liczba miast: {liczbaMiast}\n"
               f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n"
-              f"Najlepsza trasa: {' > '.join(map(str, najlepszaSciezka))}")
+              f"czas: {czasWykonania}s\n"
+              f"Najlepsza trasa: {' > '.join(map(str, najlepszaSciezka))}"
+              )
 
     print(wyniki)
 
     #pokazWyniki(wyniki)
-    rysujSciezke(miasta, najlepszaSciezka, najlepszaOdleglosc)
+    rysujSciezke(miasta, najlepszaSciezka, najlepszaOdleglosc, instancja)
 
 if __name__ == "__main__":
     main()

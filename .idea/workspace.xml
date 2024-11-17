@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="v3">
-      <change afterPath="$PROJECT_DIR$/genetyczny.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zachlanny.py" afterDir="false" />
+    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="vSzkielet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genetyczny.py" beforeDir="false" afterPath="$PROJECT_DIR$/genetyczny.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/instancje/graf.txt" beforeDir="false" afterPath="$PROJECT_DIR$/instancje/graf.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,16 +51,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.fiz.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generator.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.fiz.executor": "Run",
+    "Python.generator.executor": "Run",
+    "Python.genetyczny.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/instancje" />
@@ -197,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730744078615</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="vSzkielet">
+      <option name="closed" value="true" />
+      <created>1731780459797</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731780459797</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -227,6 +237,7 @@
     <MESSAGE value="Komiwojazerv1" />
     <MESSAGE value="Komiwojazerv2" />
     <MESSAGE value="v3" />
-    <option name="LAST_COMMIT_MESSAGE" value="v3" />
+    <MESSAGE value="vSzkielet" />
+    <option name="LAST_COMMIT_MESSAGE" value="vSzkielet" />
   </component>
 </project>
