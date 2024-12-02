@@ -79,20 +79,21 @@ def pokazWyniki(wyniki):
 
 def main():
     startTime = time.perf_counter()
-    instancja = "berlin52"
+    instancja = "bier127"
     miasta, liczbaMiast = wczytajGraf(f"instancje/{instancja}.txt")
     startoweMiasto = 1
 
 
     #najlepszaOdleglosc, najlepszaSciezka = najblizszySasiad(miasta, startoweMiasto)
     #najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta)
-    najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta, 1000,30,0.013)
+    najlepszaOdleglosc, najlepszaSciezka = algorytmGenetyczny(miasta, 100,1000,0.033, 10)
 
 
     endTime = time.perf_counter()
     czasWykonania = endTime - startTime
 
-    wyniki = (f"Liczba miast: {liczbaMiast}\n"
+    wyniki = ("\n\n##### RAPORT #####\n"
+            f"Liczba miast: {liczbaMiast}\n"
               f"Najkrótsza znaleziona odległość: {najlepszaOdleglosc:.2f}\n"
               f"czas: {czasWykonania}s\n"
               f"Najlepsza trasa: {' > '.join(map(str, najlepszaSciezka))}"
