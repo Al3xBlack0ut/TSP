@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="vSzkielet2">
+    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="vDziala!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/genetyczny.py" beforeDir="false" afterPath="$PROJECT_DIR$/genetyczny.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733129658322</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="vDziala!">
+      <option name="closed" value="true" />
+      <created>1737478153185</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1737478153185</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -338,6 +345,7 @@
     <MESSAGE value="v3" />
     <MESSAGE value="vSzkielet" />
     <MESSAGE value="vSzkielet2" />
-    <option name="LAST_COMMIT_MESSAGE" value="vSzkielet2" />
+    <MESSAGE value="vDziala!" />
+    <option name="LAST_COMMIT_MESSAGE" value="vDziala!" />
   </component>
 </project>

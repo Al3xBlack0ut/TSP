@@ -1,124 +1,122 @@
 import time
 import matplotlib.pyplot as plt
 from typing import Dict, List, Tuple
-from genetyczny import genetic_algorithm
+from genetyczny import algorytmGenetyczny
 
 
-def wczytaj_miasta(sciezka_pliku: str) -> Tuple[Dict[int, Tuple[float, float]], int]:
+def wczytajMiasta(sciezkaPliku: str) -> Tuple[Dict[int, Tuple[float, float]], int]:
     """
-    Wczytuje dane miast z pliku.
+    Wczytuj dane miast z pliku.
     Zwraca słownik miast oraz ich liczbę.
     """
-    with open(sciezka_pliku, "r") as plik:
+    with open(sciezkaPliku, "r") as plik:
         linie = plik.readlines()
-        liczba_miast = int(linie[0])
+        liczbaMiast = int(linie[0])
         miasta = {}
 
-        for i in range(1, liczba_miast + 1):
+        for i in range(1, liczbaMiast + 1):
             dane = linie[i].split()
             x = float(dane[1])
             y = float(dane[2])
             miasta[i] = (x, y)
 
-    return miasta, liczba_miast
+    return miasta, liczbaMiast
 
 
-def rysuj_trase(miasta: Dict[int, Tuple[float, float]],
-                trasa: List[int],
-                najlepsza_odleglosc: float,
-                nazwa_instancji: str) -> None:
+def rysujTrase(miasta: Dict[int, Tuple[float, float]],
+               trasa: List[int],
+               najlepszaOdleglosc: float,
+               nazwaInstancji: str) -> None:
     """
-    Wizualizuje znalezioną trasę.
+    Wizualizuj znalezioną trasę.
     """
     plt.figure(figsize=(12, 8))
 
-    # Rysowanie połączeń między miastami
+    # krawędzie
     for i in range(len(trasa) - 1):
-        x_wartosci = [miasta[trasa[i]][0], miasta[trasa[i + 1]][0]]
-        y_wartosci = [miasta[trasa[i]][1], miasta[trasa[i + 1]][1]]
-        plt.plot(x_wartosci, y_wartosci, 'b-', alpha=0.6)
+        xWartosci = [miasta[trasa[i]][0], miasta[trasa[i + 1]][0]]
+        yWartosci = [miasta[trasa[i]][1], miasta[trasa[i + 1]][1]]
+        plt.plot(xWartosci, yWartosci, 'b-', alpha=0.6)
 
-    # Rysowanie punktów miast
-    for miasto_id, koordynaty in miasta.items():
-        if miasto_id == trasa[0]:  # Miasto startowe
+    # punkty
+    for miastoId, koordynaty in miasta.items():
+        if miastoId == trasa[0]:  # Miasto startowe
             plt.plot(koordynaty[0], koordynaty[1], 'ro', markersize=10)
-            plt.text(koordynaty[0], koordynaty[1], f'Start ({miasto_id})',
+            plt.text(koordynaty[0], koordynaty[1], f'Start ({miastoId})',
                      fontsize=8, ha='right')
         else:
             plt.plot(koordynaty[0], koordynaty[1], 'ko', markersize=6)
-            plt.text(koordynaty[0], koordynaty[1], str(miasto_id),
+            plt.text(koordynaty[0], koordynaty[1], str(miastoId),
                      fontsize=8, ha='right')
 
-    plt.title(f"Problem TSP - {nazwa_instancji}\n"
-              f"Długość trasy: {najlepsza_odleglosc:.2f}")
+    plt.title(f"Problem TSP - {nazwaInstancji}\n"
+              f"Długość trasy: {najlepszaOdleglosc:.2f}")
     plt.xlabel("X")
     plt.ylabel("Y")
     plt.grid(True, alpha=0.3)
     plt.show()
 
 
-def zapisz_wyniki(sciezka: str,
-                  wyniki: dict) -> None:
+def zapiszWyniki(sciezka: str,
+                 wyniki: dict) -> None:
     """
     Zapisuje wyniki do pliku w formacie CSV.
     """
-    with open(sciezka, 'w') as f:
-        f.write("Instancja,Liczba_miast,Najlepsza_odleglosc,Czas_wykonania\n")
+    with open(sciezka, 'w') as plik:
+        plik.write("Instancja,Liczba_miast,Najlepsza_odleglosc,Czas_wykonania\n")
         for instancja, dane in wyniki.items():
-            f.write(f"{instancja},{dane['liczba_miast']},"
-                    f"{dane['najlepsza_odleglosc']:.2f},{dane['czas']:.2f}\n")
+            plik.write(f"{instancja},{dane['liczbaMiast']},"
+                       f"{dane['najlepszaOdleglosc']:.2f},{dane['czas']:.2f}\n")
 
 
 def main():
     # Parametry algorytmu
     ROZMIAR_POPULACJI = 100
-    LICZBA_GENERACJI = 5000
+    LICZBA_POKOLEN = 10000
     WSPOLCZYNNIK_MUTACJI = 0.02
     ROZMIAR_TURNIEJU = 5
 
-    # Lista instancji do przetestowania
-    instancje = ["bier127"]  # Możesz dodać więcej instancji
+    instancje = ["bier127"]
     wyniki = {}
 
     for instancja in instancje:
         print(f"\nRozwiązywanie instancji: {instancja}")
 
         # Wczytaj dane
-        sciezka_pliku = f"instancje/{instancja}.txt"
-        miasta, liczba_miast = wczytaj_miasta(sciezka_pliku)
+        sciezkaPliku = f"instancje/{instancja}.txt"
+        miasta, liczbaMiast = wczytajMiasta(sciezkaPliku)
 
         # Mierz czas wykonania
-        czas_start = time.perf_counter()
+        czasStart = time.perf_counter()
 
         # Uruchom algorytm genetyczny
-        najlepsza_odleglosc, najlepsza_trasa = genetic_algorithm(
+        najlepszaOdleglosc, najlepszaTrasa = algorytmGenetyczny(
             miasta,
-            pop_size=ROZMIAR_POPULACJI,
-            generations=LICZBA_GENERACJI,
-            mutation_rate=WSPOLCZYNNIK_MUTACJI,
-            tournament_size=ROZMIAR_TURNIEJU
+            rozmiarPopulacji=ROZMIAR_POPULACJI,
+            liczbaPokolen=LICZBA_POKOLEN,
+            wspolczynnikMutacji=WSPOLCZYNNIK_MUTACJI,
+            rozmiarTurnieju=ROZMIAR_TURNIEJU
         )
 
-        czas_wykonania = time.perf_counter() - czas_start
+        czasWykonania = time.perf_counter() - czasStart
 
-        # Zapisz wyniki
+
         wyniki[instancja] = {
-            'liczba_miast': liczba_miast,
-            'najlepsza_odleglosc': najlepsza_odleglosc,
-            'czas': czas_wykonania
+            'liczbaMiast': liczbaMiast,
+            'najlepszaOdleglosc': najlepszaOdleglosc,
+            'czas': czasWykonania
         }
 
         # Wyświetl raport
         print("\n----- RAPORT -----")
         print(f"Instancja: {instancja}")
-        print(f"Liczba miast: {liczba_miast}")
-        print(f"Najlepsza znaleziona odległość: {najlepsza_odleglosc:.2f}")
-        print(f"Czas wykonania: {czas_wykonania:.2f} sekund")
-        print(f"Najlepsza trasa: {' -> '.join(map(str, najlepsza_trasa))}")
+        print(f"Liczba miast: {liczbaMiast}")
+        print(f"Najlepsza znaleziona odległość: {najlepszaOdleglosc:.2f}")
+        print(f"Czas wykonania: {czasWykonania:.2f} sekund")
+        print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
 
         # Wizualizuj wyniki
-        rysuj_trase(miasta, najlepsza_trasa, najlepsza_odleglosc, instancja)
-
+        rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)
 
 
 if __name__ == "__main__":
