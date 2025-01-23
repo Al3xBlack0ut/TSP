@@ -1,0 +1,114 @@
+Funkcja algorytmGenetyczny(liczbaPokolen, rozmiarPopulacji, wspolczynnikMutacji, rozmiarTurnieju):
+   miastaMacierz <- Utwórz macierz odległości między wszystkimi miastami
+   populacja <- []
+
+   Dla 40% populacji:
+       Wybierz losowe miasto startowe z miastaMacierz
+       trasa <- Wygeneruj trasę metodą najbliższego sąsiada
+       Dodaj trasa do populacji
+
+   Dla pozostałych 60%:
+       trasa <- Wygeneruj losową permutację miast
+       poprawa2opt(trasa)
+       Dodajtrasa  do populacji
+
+   stagnacja <- 0
+   najlepszaOdleglosc ← ∞
+   najlepszaTrasa ← null
+
+   Dopóki i < liczbaPokolen:
+       nowaPopulacja <- []
+
+       elita < -Znajdź najlepszego osobnika z populacja
+       Dodaj elita do nowaPopulacja
+
+       Dopóki rozmiar(nowaPopulacja) < rozmiar(populacja):
+           rodzic1 <- selekcjaTurniejowa(populacja, rozmiarTurnieju)
+           rodzic2 <- selekcjaTurniejowa(populacja, rozmiarTurnieju)
+           dziecko <- krzyzowanieEAX(rodzic1, rodzic2, miastaMacierz)
+
+           Z prawdopodobieństwem wspolczynnikMutacji:
+               poprawa2opt(dziecko)
+
+           Dodaj dziecko do nowaPopulacja
+
+       populacja <- nowaPopulacja
+
+       trasa <- Znajdź najlepszego osobnika i oblicz jego koszt
+
+       Jeśli trasa < najlepszaTrasa:
+           najlepszaTrasa <- trasa
+           stagnacja <- 0
+       Wpp:
+           stagnacja++
+
+       Jeśli stagnacja > 50:
+           Wymień połowę populacji na nowe osobniki
+           stagnacja <- 0
+
+   Zwróć najlepszaTrasa i jej koszt
+
+
+Funkcja krzyzowanieEAX(rodzic1, rodzic2, miastaMacierz):
+   dziecko <- []
+   nieodwiedzone <- lista wszystkich miast
+
+   miasto <- Wybierz losowe miasto z rodzic1
+   Dodaj miasto do dziecko
+   Usuń miasto z nieodwiedzone
+
+   Dopóki nieodwiedzone nie jest puste:
+       kandydaci <- []
+
+       Dla rodzic w (rodzic1, rodzic2):
+           nastepne <- Znajdź następne miasto po obecnym w rodzic
+           Jeśli nastepne jest w nieodwiedzone:
+               dodaj nastepne do kandydaci
+
+       Jeśli kandydaci nie jest pusty:
+           miasto <- Znajdź najbliższego kandydata według miastaMacierz
+       Wpp:
+           miasto <- Znajdź najbliższe nieodwiedzone miasto
+
+       Dodaj miasto do dziecko
+       Usuń miasto z nieodwiedzone
+
+   Dodaj pierwsze miasto na koniec dziecko
+   Zwróć dziecko
+
+
+Funkcja poprawa2opt(trasa, miastaMacierz):
+   zmiana <- prawda
+   najlepszyKoszt <- koszt(trasa)
+
+   Dopóki zmiana:
+       zmiana <- fałsz
+
+       Dla każdej pary miast (i,j) w trasie:
+           kosztObecny <- Oblicz koszt krawędzi (i-1,i) + (j,j+1)
+           kosztNowy <- Oblicz koszt krawędzi (i-1,j) + (i,j+1)
+
+           Jeśli kosztNowy < kosztObecny:]
+               Odwróć fragment trasy od i do j
+
+               kosztCałkowity <- Oblicz całkowity koszt nowej trasy
+
+               Jeśli kosztCałkowity < najlepszyKoszt:
+                   najlepszyKoszt <- kosztCałkowity
+                   zmiana <- prawda
+                   Przerwij pętlę wewnętrzną
+               Wpp:
+                   Odwróć fragment z powrotem
+
+   Zwróć trasa
+
+
+Funkcja selekcjaTurniejowa(populacja, rozmiarTurnieju, miastaMacierz):
+   turniej <- Wybierz losowo rozmiarTurnieju osobników z populacja
+   najlepszy <- pierwszy osobnik z turniej
+
+   Dla osobnik w turniej:
+       Jeśli koszt(osobnik) < koszt(najlepszy):
+           najlepszy <- osobnik
+
+   Zwróć najlepszy

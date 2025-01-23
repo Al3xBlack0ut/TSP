@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="vDziala!">
+    <list default="true" id="24f63c77-4c5a-4444-ad34-5eada025334b" name="Changes" comment="v1.0(Numba)">
+      <change afterPath="$PROJECT_DIR$/pseudokod.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/genetyczny.py" beforeDir="false" afterPath="$PROJECT_DIR$/genetyczny.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -57,6 +58,7 @@
     "Python.main.executor": "Run",
     "Python.notMain.executor": "Run",
     "Python.test.executor": "Run",
+    "Python.wyniki.executor": "Run",
     "Python.zachlanny.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -162,6 +164,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="wyniki" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TSP" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wyniki.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="zachlanny" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TSP" />
       <option name="ENV_FILES" value="" />
@@ -186,6 +210,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wyniki" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.zachlanny" />
         <item itemvalue="Python.test" />
@@ -313,7 +338,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737478153185</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="v1.0(Numba)">
+      <option name="closed" value="true" />
+      <created>1737482633731</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1737482633731</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -346,6 +379,7 @@
     <MESSAGE value="vSzkielet" />
     <MESSAGE value="vSzkielet2" />
     <MESSAGE value="vDziala!" />
-    <option name="LAST_COMMIT_MESSAGE" value="vDziala!" />
+    <MESSAGE value="v1.0(Numba)" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.0(Numba)" />
   </component>
 </project>

@@ -57,30 +57,22 @@ def rysujTrase(miasta: Dict[int, Tuple[float, float]],
     plt.show()
 
 
-def zapiszWyniki(sciezka: str,
-                 wyniki: dict) -> None:
-    """
-    Zapisuje wyniki do pliku w formacie CSV.
-    """
-    with open(sciezka, 'w') as plik:
-        plik.write("Instancja,Liczba_miast,Najlepsza_odleglosc,Czas_wykonania\n")
-        for instancja, dane in wyniki.items():
-            plik.write(f"{instancja},{dane['liczbaMiast']},"
-                       f"{dane['najlepszaOdleglosc']:.2f},{dane['czas']:.2f}\n")
-
-
 def main():
     # Parametry algorytmu
     ROZMIAR_POPULACJI = 100
-    LICZBA_POKOLEN = 10000
+    LICZBA_POKOLEN = 1500
+    #berlin52 - 180000
+    #bier127 - 45000
+    #tsp250 - 8000
+    #tsp500 - 1500
+    #tsp1000 - 300
     WSPOLCZYNNIK_MUTACJI = 0.02
     ROZMIAR_TURNIEJU = 5
 
-    instancje = ["bier127"]
+    instancje = ["berlin52"]
     wyniki = {}
-
+    #,,"tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000"
     for instancja in instancje:
-        print(f"\nRozwiązywanie instancji: {instancja}")
 
         # Wczytaj dane
         sciezkaPliku = f"instancje/{instancja}.txt"
@@ -108,12 +100,11 @@ def main():
         }
 
         # Wyświetl raport
-        print("\n----- RAPORT -----")
+        #print("\n----- RAPORT -----")
         print(f"Instancja: {instancja}")
-        print(f"Liczba miast: {liczbaMiast}")
         print(f"Najlepsza znaleziona odległość: {najlepszaOdleglosc:.2f}")
-        print(f"Czas wykonania: {czasWykonania:.2f} sekund")
-        print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
+        #print(f"Czas wykonania: {czasWykonania:.2f} sekund")
+        #print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
 
         # Wizualizuj wyniki
         rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)

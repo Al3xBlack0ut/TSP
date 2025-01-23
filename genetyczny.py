@@ -6,13 +6,11 @@ from typing import Dict, List, Tuple
 
 @jit(nopython=True)
 def obliczOdleglosc(miasto1: np.ndarray, miasto2: np.ndarray) -> float:
-    """Oblicza odległość euklidesową między dwoma miastami."""
     return np.sqrt(((miasto2 - miasto1) ** 2).sum())
 
 
 @jit(nopython=True)
 def utworzMacierzOdleglosci(tablicaMiast: np.ndarray) -> np.ndarray:
-    """Tworzy macierz odległości między wszystkimi miastami."""
     liczbaMiast = len(tablicaMiast)
     odleglosci = np.zeros((liczbaMiast, liczbaMiast))
     for i in range(liczbaMiast):
@@ -24,7 +22,6 @@ def utworzMacierzOdleglosci(tablicaMiast: np.ndarray) -> np.ndarray:
 
 @jit(nopython=True)
 def obliczKosztTrasy(trasa: np.ndarray, macierzOdleglosci: np.ndarray) -> float:
-    """Oblicza całkowitą długość trasy."""
     calkowityKoszt = 0.0
     for i in range(len(trasa) - 1):
         calkowityKoszt += macierzOdleglosci[trasa[i] - 1][trasa[i + 1] - 1]
@@ -33,7 +30,6 @@ def obliczKosztTrasy(trasa: np.ndarray, macierzOdleglosci: np.ndarray) -> float:
 
 @jit(nopython=True)
 def poprawa2opt(trasa: np.ndarray, macierzOdleglosci: np.ndarray) -> np.ndarray:
-    """Implementacja lokalnego przeszukiwania 2-opt."""
     poprawiono = True
     najlepszaOdleglosc = obliczKosztTrasy(trasa, macierzOdleglosci)
     trasa = trasa.copy()
@@ -59,7 +55,6 @@ def poprawa2opt(trasa: np.ndarray, macierzOdleglosci: np.ndarray) -> np.ndarray:
 
 @jit(nopython=True)
 def trasaNajblizzegoSasiada(macierzOdleglosci: np.ndarray, miastoStartowe: int) -> np.ndarray:
-    """Tworzy trasę metodą najbliższego sąsiada."""
     liczbaMiast = len(macierzOdleglosci)
     nieodwiedzone = np.ones(liczbaMiast, dtype=np.bool_)
     trasa = np.zeros(liczbaMiast + 1, dtype=np.int64)
@@ -105,7 +100,6 @@ def generujPopulacjePoczatkowa(tablicaMiast: np.ndarray,
     for _ in range(int(rozmiarPopulacji * 0.4)):
         miastoStart = random.randint(1, liczbaMiast)
         trasa = trasaNajblizzegoSasiada(macierzOdleglosci, miastoStart)
-        trasa = poprawa2opt(trasa, macierzOdleglosci)
         populacja.append(trasa)
 
     # Losowo z 2-opt - 60% populacji
@@ -122,7 +116,6 @@ def generujPopulacjePoczatkowa(tablicaMiast: np.ndarray,
 @jit(nopython=True)
 def krzyzeowanieEAX(rodzic1: np.ndarray, rodzic2: np.ndarray,
                     macierzOdleglosci: np.ndarray) -> np.ndarray:
-    """Zoptymalizowana wersja operatora krzyżowania EAX."""
     liczbaMiast = len(rodzic1) - 1
     dziecko = np.zeros(liczbaMiast + 1, dtype=np.int64)
     nieodwiedzone = np.ones(liczbaMiast, dtype=np.bool_)
@@ -214,7 +207,7 @@ def algorytmGenetyczny(miasta: Dict,
                 tablicaMiast, macierzOdleglosci, rozmiarPopulacji - polowaRozmiaru))
             licznikStagnacji = 0
 
-        if pokolenie % 100 == 0:
-            print(f"Pokolenie {pokolenie}: {najlepszaOdleglosc:.2f}")
+        #if pokolenie % 100 == 0:
+            #print(f"Pokolenie {pokolenie}: {najlepszaOdleglosc:.2f}")
 
     return najlepszaOdleglosc, najlepszaTrasa
