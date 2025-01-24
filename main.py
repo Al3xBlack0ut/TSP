@@ -70,7 +70,6 @@ def testujInstancje(nazwaInstancji: str, miasta: Dict, parametry: Dict) -> Tuple
 
 
 def main():
-    # Parametry algorytmu
     parametry = {
         'rozmiarPopulacji': 100,
         'liczbaPokolen': -1,
@@ -85,22 +84,18 @@ def main():
         'liczbaTestow': 3,
     }
 
-    # Lista instancji do przetestowania
-    instancje = ['berlin52', 'a280', 'tsp225', 'rat575', 'burma14',
-                 'bier127', 'pr76', 'gr229', 'ali535', 'ts225']
+    instancje = ['vm1084', 'ali535', 'ts225']
     wyniki = {}
 
     for instancja in instancje:
-        # Wczytaj dane
         sciezkaPliku = f"instancje/{instancja}.txt"
-        miasta, liczbaMiast = wczytajMiasta(sciezkaPliku)
+        miasta, _ = wczytajMiasta(sciezkaPliku)
 
         czasStart = time.perf_counter()
         najlepszaOdleglosc, najlepszaTrasa = testujInstancje(instancja, miasta, parametry)
         czasWykonania = time.perf_counter() - czasStart
 
         wyniki[instancja] = {
-            'liczbaMiast': liczbaMiast,
             'najlepszaOdleglosc': najlepszaOdleglosc,
             'czas': czasWykonania
         }
@@ -108,7 +103,7 @@ def main():
 
         #print("\n----- RAPORT -----")
         print(f"Instancja: {instancja}")
-        print(f"Najlepsza znaleziona odległość: {najlepszaOdleglosc:.2f}")
+        print(f"Najlepsza znaleziona odległość: {najlepszaOdleglosc:.0f}")
         # print(f"Czas wykonania: {czasWykonania:.2f} sekund")
         # print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
 
