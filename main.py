@@ -1,14 +1,11 @@
 import time
 import matplotlib.pyplot as plt
+import numpy as np
 from typing import Dict, List, Tuple
 from genetyczny import algorytmGenetyczny
 
 
 def wczytajMiasta(sciezkaPliku: str) -> Tuple[Dict[int, Tuple[float, float]], int]:
-    """
-    Wczytuj dane miast z pliku.
-    Zwraca słownik miast oraz ich liczbę.
-    """
     with open(sciezkaPliku, "r") as plik:
         linie = plik.readlines()
         liczbaMiast = int(linie[0])
@@ -27,9 +24,6 @@ def rysujTrase(miasta: Dict[int, Tuple[float, float]],
                trasa: List[int],
                najlepszaOdleglosc: float,
                nazwaInstancji: str) -> None:
-    """
-    Wizualizuj znalezioną trasę.
-    """
     plt.figure(figsize=(12, 8))
 
     # krawędzie
@@ -49,49 +43,62 @@ def rysujTrase(miasta: Dict[int, Tuple[float, float]],
             plt.text(koordynaty[0], koordynaty[1], str(miastoId),
                      fontsize=8, ha='right')
 
-    plt.title(f"Problem TSP - {nazwaInstancji}\n"
-              f"Długość trasy: {najlepszaOdleglosc:.2f}")
+    plt.title(f"Problem TSP - {nazwaInstancji}\nDługość trasy: {najlepszaOdleglosc:.2f}")
     plt.xlabel("X")
     plt.ylabel("Y")
     plt.grid(True, alpha=0.3)
     plt.show()
 
 
+def testujInstancje(nazwaInstancji: str, miasta: Dict, parametry: Dict) -> Tuple[float, List[int]]:
+    print(f"\nTestowanie instancji: {nazwaInstancji}")
+    najlepszaOdleglosc = np.inf
+    najlepszaTrasa = None
+    for test in range(parametry['liczbaTestow']):
+        odleglosc, trasa = algorytmGenetyczny(
+            miasta,
+            rozmiarPopulacji=parametry['rozmiarPopulacji'],
+            liczbaPokolen=parametry['liczbaPokolen'],
+            wspolczynnikMutacji=parametry['wspolczynnikMutacji'],
+            rozmiarTurnieju=parametry['rozmiarTurnieju']
+        )
+        if odleglosc<najlepszaOdleglosc:
+            najlepszaOdleglosc=odleglosc
+            najlepszaTrasa = trasa
+
+    return najlepszaOdleglosc, najlepszaTrasa
+
+
 def main():
     # Parametry algorytmu
-    ROZMIAR_POPULACJI = 100
-    LICZBA_POKOLEN = 1500
-    #berlin52 - 180000
-    #bier127 - 45000
-    #tsp250 - 8000
-    #tsp500 - 1500
-    #tsp1000 - 300
-    WSPOLCZYNNIK_MUTACJI = 0.02
-    ROZMIAR_TURNIEJU = 5
+    parametry = {
+        'rozmiarPopulacji': 100,
+        'liczbaPokolen': -1,
+        #-1 - automatyczna, zalezna od ilosci miast
+        # berlin52 - 180000
+        # bier127 - 45000
+        # tsp250 - 8000
+        # tsp500 - 1500
+        # tsp1000 - 300
+        'wspolczynnikMutacji': 0.02,
+        'rozmiarTurnieju': 5,
+        'liczbaTestow': 3,
+    }
 
-    instancje = ["berlin52"]
+    # Lista instancji do przetestowania
+    instancje = ['berlin52', 'a280', 'tsp225', 'rat575', 'burma14',
+                 'bier127', 'pr76', 'gr229', 'ali535', 'ts225']
     wyniki = {}
-    #,,"tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000","tsp1000"
-    for instancja in instancje:
 
+    for instancja in instancje:
         # Wczytaj dane
         sciezkaPliku = f"instancje/{instancja}.txt"
         miasta, liczbaMiast = wczytajMiasta(sciezkaPliku)
 
         # Mierz czas wykonania
         czasStart = time.perf_counter()
-
-        # Uruchom algorytm genetyczny
-        najlepszaOdleglosc, najlepszaTrasa = algorytmGenetyczny(
-            miasta,
-            rozmiarPopulacji=ROZMIAR_POPULACJI,
-            liczbaPokolen=LICZBA_POKOLEN,
-            wspolczynnikMutacji=WSPOLCZYNNIK_MUTACJI,
-            rozmiarTurnieju=ROZMIAR_TURNIEJU
-        )
-
+        najlepszaOdleglosc, najlepszaTrasa = testujInstancje(instancja, miasta, parametry)
         czasWykonania = time.perf_counter() - czasStart
-
 
         wyniki[instancja] = {
             'liczbaMiast': liczbaMiast,
@@ -99,15 +106,15 @@ def main():
             'czas': czasWykonania
         }
 
-        # Wyświetl raport
+
         #print("\n----- RAPORT -----")
         print(f"Instancja: {instancja}")
         print(f"Najlepsza znaleziona odległość: {najlepszaOdleglosc:.2f}")
-        #print(f"Czas wykonania: {czasWykonania:.2f} sekund")
-        #print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
+        # print(f"Czas wykonania: {czasWykonania:.2f} sekund")
+        # print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
 
         # Wizualizuj wyniki
-        rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)
+        # rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)
 
 
 if __name__ == "__main__":

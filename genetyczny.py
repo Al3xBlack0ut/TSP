@@ -164,6 +164,10 @@ def algorytmGenetyczny(miasta: Dict,
     tablicaMiast = konwertujDoNumpy(miasta)
     macierzOdleglosci = utworzMacierzOdleglosci(tablicaMiast)
 
+    if liczbaPokolen == -1:
+        liczbaPokolen = int(1469261436.98 * (len(miasta)**(-2.21)))
+        #print("liczba pokoleń: "+str(liczbaPokolen))
+
     populacja = generujPopulacjePoczatkowa(tablicaMiast, macierzOdleglosci, rozmiarPopulacji)
     najlepszaOdleglosc = np.inf
     najlepszaTrasa = None
