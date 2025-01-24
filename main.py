@@ -95,7 +95,6 @@ def main():
         sciezkaPliku = f"instancje/{instancja}.txt"
         miasta, liczbaMiast = wczytajMiasta(sciezkaPliku)
 
-        # Mierz czas wykonania
         czasStart = time.perf_counter()
         najlepszaOdleglosc, najlepszaTrasa = testujInstancje(instancja, miasta, parametry)
         czasWykonania = time.perf_counter() - czasStart
