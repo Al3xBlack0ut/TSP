@@ -60,6 +60,11 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/aleks/PycharmProjects/TSP/testy",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -383,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737983193340</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="v1.3">
+      <option name="closed" value="true" />
+      <created>1737983312306</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1737983312306</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
