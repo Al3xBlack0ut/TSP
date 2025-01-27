@@ -73,7 +73,7 @@ def main():
     parametry = {
         'rozmiarPopulacji': 100,
         'liczbaPokolen': -1,
-        #-1 - automatyczna, zalezna od ilosci miast
+        # -1 - automatyczna, zależna od ilosci miast
         # berlin52 - 180000
         # bier127 - 45000
         # tsp250 - 8000
@@ -81,10 +81,10 @@ def main():
         # tsp1000 - 300
         'wspolczynnikMutacji': 0.02,
         'rozmiarTurnieju': 5,
-        'liczbaTestow': 3,
+        'liczbaTestow': 1,
     }
 
-    instancje = ['vm1084', 'ali535', 'ts225']
+    instancje = ['tsp250', 'tsp500']
     wyniki = {}
 
     for instancja in instancje:
@@ -108,7 +108,7 @@ def main():
         # print(f"Najlepsza trasa: {' -> '.join(map(str, najlepszaTrasa))}")
 
         # Wizualizuj wyniki
-        # rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)
+        rysujTrase(miasta, najlepszaTrasa, najlepszaOdleglosc, instancja)
 
 
 if __name__ == "__main__":
