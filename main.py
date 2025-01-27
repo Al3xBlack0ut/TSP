@@ -84,7 +84,7 @@ def main():
         'liczbaTestow': 1,
     }
 
-    instancje = ['tsp250', 'tsp500']
+    instancje = ['berlin52', 'tsp500']
     wyniki = {}
 
     for instancja in instancje:

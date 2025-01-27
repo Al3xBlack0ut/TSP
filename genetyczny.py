@@ -81,7 +81,7 @@ def trasaNajblizzegoSasiada(macierzOdleglosci: np.ndarray, miastoStartowe: int) 
 
 
 def konwertujDoNumpy(miasta: Dict) -> np.ndarray:
-    """Konwertuje słownik miast na format NumPy."""
+    """Konwertuje słownik miast na format NumPy. """
     liczbaMiast = len(miasta)
     tablicaMiast = np.zeros((liczbaMiast, 2))
     for idMiasta, wspolrzedne in miasta.items():
