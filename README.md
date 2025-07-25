@@ -8,7 +8,7 @@ Ten projekt rozwiązuje problem komiwojażera (TSP) przy użyciu algorytmu genet
 
 - `main.py` – główny plik uruchamiający algorytm, wizualizujący trasę i raportujący wyniki.
 - `genetyczny.py` – implementacja algorytmu genetycznego, operatorów krzyżowania, mutacji (2-opt), selekcji turniejowej oraz generowania populacji.
-- `zachlanny.py` – algorytmy zachłanne (np. najbliższego sąsiada).
+- `zachlanny.py` – algorytm zachłanny najbliższego sąsiada
 - `generator.py` – generator nowych instancji miast.
 - `instancje/` – przykładowe pliki z instancjami problemu TSP.
 - `pseudokod.txt` – pseudokod algorytmów.
