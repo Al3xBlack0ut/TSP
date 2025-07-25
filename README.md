@@ -1,5 +1,5 @@
 # Problem Komiwojażera (TSP) – Algorytm Genetyczny
-### Autor: Aleks Czarnecki
+Autor: **Aleks Czarnecki**
 Ten projekt rozwiązuje problem komiwojażera (TSP) przy użyciu algorytmu genetycznego oraz metod zachłannych. Pozwala na testowanie różnych instancji problemu, wizualizację tras oraz generowanie nowych instancji.
 
 ---
